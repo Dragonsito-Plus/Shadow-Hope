@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shadow Hope 1 — Official Website</title>
+    
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0b0b14; margin: 0; color: #eee; overflow-x: hidden; }
+        * { box-sizing: border-box; }
+        
+        /* NAVBAR */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #161625; border-bottom: 2px solid #2d2d44; position: fixed; width: 100%; top: 0; z-index: 1000; }
+        .logo-nav { height: 35px; cursor: pointer; }
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+
+        /* CONTAINER */
+        .container { max-width: 1000px; margin: 100px auto 40px; padding: 0 20px; }
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: #1a1a2e; padding: 30px; border-radius: 12px; border: 1px solid #2d2d44; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* STORE */
+        .product { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        .thumb { width: 220px; height: 220px; background: url('logo.png') center/cover; border-radius: 12px; border: 2px solid #3b3b6a; }
+        .btn-os { padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin: 8px 0; font-size: 16px; transition: 0.2s; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-android { background: #3ddc84; color: #000; }
+        .btn-windows { background: #00a4ef; color: #fff; }
+        .btn-os:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+        /* DROPDOWN MENU */
+        .dropdown { display: none; position: absolute; right: 0; top: 50px; background: #161625; border: 1px solid #2d2d44; border-radius: 8px; min-width: 200px; z-index: 1001; }
+        .dropdown a { display: block; padding: 15px; color: #eee; text-decoration: none; border-bottom: 1px solid #23233a; cursor: pointer; }
+        .dropdown a:hover { background: #2d2d44; }
+
+        .contact-info { color: #0a6bff; font-weight: bold; font-size: 18px; margin-top: 15px; display: block; text-decoration: none; }
+        .modal-btn { width: 100%; padding: 14px; background: #0a6bff; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <img src="logo.png" class="logo-nav" onclick="showSection('home')" alt="Shadow Hope">
+        </div>
+        <div class="nav-right" style="position: relative;">
+            <div style="cursor:pointer; font-size:30px;" onclick="toggleMenu()">☰</div>
+            <div class="dropdown" id="dropdown-menu">
+                <a onclick="showSection('home')">🏠 Home</a>
+                <a onclick="showSection('store')">🛒 Store</a>
+                <a onclick="showSection('community')">💬 Community</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="home" class="section active">
+            <div class="card" style="text-align:center;">
+                <img src="logo.png" style="width:150px; margin-bottom:20px;">
+                <h1>SHADOW HOPE 1</h1>
+                <p>Explore a world plunged into darkness. Your survival depends on your decisions.</p>
+                <button class="modal-btn" style="max-width:200px;" onclick="showSection('store')">Play Now</button>
+            </div>
+        </div>
+
+        <div id="store" class="section">
+            <div class="card product">
+                <div class="thumb"></div>
+                <div style="flex:1; min-width:250px;">
+                    <h2>Download the Game</h2>
+                    <p>Current version: **v1.0.4**</p>
+                    <a href="Shadow Hope 1 Android.apk" class="btn-os btn-android">Download for Android</a>
+                    <a href="Shadow Hope 1.zip" class="btn-os btn-windows">Download for Windows</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="community" class="section">
+            <div class="card" style="text-align:center;">
+                <h2>Community & Support</h2>
+                <p>For errors, bugs, or payment issues, please contact us directly:</p>
+                <div style="margin-top: 25px;">
+                    <p>WhatsApp / Phone:</p>
+                    <a href="tel:+584225368090" class="contact-info">+58 422-5368090</a>
+                    
+                    <p style="margin-top: 20px;">Email:</p>
+                    <a href="mailto:dragonhonest1@gmail.com" class="contact-info">dragonhonest1@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- NAVIGATION ---
+        function toggleMenu() { 
+            const m = document.getElementById('dropdown-menu'); 
+            m.style.display = m.style.display === 'block' ? 'none' : 'block'; 
+        }
+
+        function showSection(id) { 
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
+            document.getElementById(id).classList.add('active'); 
+            const m = document.getElementById('dropdown-menu');
+            m.style.display = 'none'; // Close menu after selection
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.nav-right div')) {
+                const dropdown = document.getElementById('dropdown-menu');
+                if (dropdown.style.display === 'block') {
+                    dropdown.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
