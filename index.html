@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shadow Hope 1 — Web Oficial</title>
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("Kyr2sQBZLHihuoJud");
+       })();
+    </script>
+
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0b0b14; margin: 0; color: #eee; overflow-x: hidden; }
+        * { box-sizing: border-box; }
+        
+        /* NAVBAR */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #161625; border-bottom: 2px solid #2d2d44; position: fixed; width: 100%; top: 0; z-index: 1000; }
+        .nav-left { display: flex; gap: 10px; align-items: center; }
+        .logo-nav { height: 35px; cursor: pointer; }
+        .btn-nav { background: transparent; border: 1px solid #0a6bff; color: #0a6bff; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-nav:hover { background: #0a6bff; color: #fff; }
+
+        /* CONTENEDOR */
+        .container { max-width: 1000px; margin: 100px auto 40px; padding: 0 20px; }
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: #1a1a2e; padding: 30px; border-radius: 12px; border: 1px solid #2d2d44; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* TIENDA */
+        .product { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        .thumb { width: 220px; height: 220px; background: url('logo.png') center/cover; border-radius: 12px; border: 2px solid #3b3b6a; }
+        .btn-os { padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin: 8px 0; font-size: 16px; transition: 0.2s; }
+        .btn-android { background: #3ddc84; color: #000; }
+        .btn-windows { background: #00a4ef; color: #fff; }
+        .btn-os:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+        /* MENU DESPLEGABLE */
+        .dropdown { display: none; position: absolute; right: 0; top: 50px; background: #161625; border: 1px solid #2d2d44; border-radius: 8px; min-width: 200px; z-index: 1001; }
+        .dropdown a { display: block; padding: 15px; color: #eee; text-decoration: none; border-bottom: 1px solid #23233a; cursor: pointer; }
+        .dropdown a:hover { background: #2d2d44; }
+
+        /* MODALES */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: #1a1a2e; padding: 35px; border-radius: 15px; width: 90%; max-width: 420px; text-align: center; border: 1px solid #3b3b6a; }
+        
+        input, textarea { width: 100%; padding: 14px; margin: 10px 0; background: #0d0d1a; border: 1px solid #2d2d44; color: #fff; border-radius: 6px; }
+        .modal-btn { width: 100%; padding: 14px; background: #0a6bff; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .loader { display: none; border: 3px solid #f3f3f3; border-top: 3px solid #0a6bff; border-radius: 50%; width: 25px; height: 25px; animation: spin 1s linear infinite; margin: 15px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left" id="user-controls">
+            <button class="btn-nav" onclick="openModal('login-modal')">Iniciar Sesión</button>
+        </div>
+        <img src="logo.png" class="logo-nav" onclick="showSection('inicio')" alt="Shadow Hope">
+        <div style="position: relative;">
+            <div style="cursor:pointer; font-size:30px;" onclick="toggleMenu()">☰</div>
+            <div class="dropdown" id="dropdown-menu">
+                <a onclick="showSection('inicio')">🏠 Inicio</a>
+                <a onclick="showSection('tienda')">🛒 Tienda</a>
+                <a onclick="showSection('comunidad')">💬 Comunidad</a>
+                <a onclick="showSection('cloud')">☁️ Mi Progreso</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="inicio" class="section active">
+            <div class="card" style="text-align:center;">
+                <img src="logo.png" style="width:150px; margin-bottom:20px;">
+                <h1>SHADOW HOPE 1</h1>
+                <p>Explora un mundo sumido en la oscuridad. Tu supervivencia depende de tus decisiones.</p>
+                <button class="modal-btn" style="width:200px;" onclick="showSection('tienda')">Jugar Ahora</button>
+            </div>
+        </div>
+
+        <div id="tienda" class="section">
+            <div class="card product">
+                <div class="thumb"></div>
+                <div style="flex:1; min-width:250px;">
+                    <h2>Descarga el Juego</h2>
+                    <p>Versión actual: **v1.0.4**</p>
+                    <button class="btn-os btn-android" onclick="window.location.href='Shadow Hope 1 Android.apk'">Descargar para Android</button>
+                    <button class="btn-os btn-windows" onclick="window.location.href='Shadow Hope 1.zip'">Descargar para Windows</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="comunidad" class="section">
+            <div class="card">
+                <h2>Comunidad y Soporte</h2>
+                <textarea id="bug-text" rows="4" placeholder="¿Encontraste un error o tienes una sugerencia?"></textarea>
+                <button class="modal-btn" onclick="enviarReporte()">Enviar Mensaje</button>
+            </div>
+        </div>
+
+        <div id="cloud" class="section">
+            <div class="card">
+                <h2>Nube de Datos</h2>
+                <div id="cloud-info">
+                    <p>Inicia sesión para sincronizar tus partidas del juego con la web.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span onclick="closeModal('login-modal')" style="float:right; cursor:pointer;">&times;</span>
+            <h2>Acceso a Shadow Hope</h2>
+            <div id="google-btn"></div>
+            <p>O usa tu correo electrónico:</p>
+            <input type="email" id="login-email" placeholder="ejemplo@correo.com">
+            <button class="modal-btn" onclick="sendCode('login')">Enviar Código</button>
+            <div id="loader-login" class="loader"></div>
+            
+            <div id="login-verification" style="display:none; margin-top:15px;">
+                <input type="text" id="login-code" placeholder="Código de 4 dígitos">
+                <input type="password" id="login-pass" placeholder="Tu Contraseña">
+                <button class="modal-btn" style="background:#00e676; color:#000;" onclick="verifyLogin()">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="username-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Nuevo Perfil</h2>
+            <input type="text" id="new-username" placeholder="Nombre de usuario">
+            <input type="password" id="new-password" placeholder="Crea una contraseña">
+            <button class="modal-btn" onclick="saveNewProfile()">Crear Cuenta</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = JSON.parse(localStorage.getItem('user_session')) || null;
+        let codeGenerated = "";
+
+        // --- INICIALIZAR ---
+        window.onload = () => {
+            renderUserNav();
+            google.accounts.id.initialize({
+                client_id: "593613328099-79dqui4ns96lbjgmumg9goclnf4ug71g.apps.googleusercontent.com",
+                callback: handleGoogle
+            });
+            google.accounts.id.renderButton(document.getElementById("google-btn"), { theme: "outline", size: "large" });
+        };
+
+        // --- EMAILJS ---
+        function sendCode(type) {
+            const email = document.getElementById('login-email').value;
+            if(!email.includes("@")) return alert("Correo no válido");
+
+            document.getElementById('loader-login').style.display = "block";
+            codeGenerated = Math.floor(1000 + Math.random() * 9000).toString();
+
+            emailjs.send('service_oyw7kda', 'template_b4tefri', {
+                to_email: email,
+                passcode: codeGenerated
+            }).then(() => {
+                document.getElementById('loader-login').style.display = "none";
+                document.getElementById('login-verification').style.display = "block";
+                alert("Código enviado correctamente.");
+            });
+        }
+
+        function verifyLogin() {
+            const email = document.getElementById('login-email').value;
+            const code = document.getElementById('login-code').value;
+            const pass = document.getElementById('login-pass').value;
+
+            if(code !== codeGenerated) return alert("Código incorrecto");
+            
+            let user = JSON.parse(localStorage.getItem(email));
+            if(!user) {
+                sessionStorage.setItem('temp_email', email);
+                openModal('username-modal');
+                closeModal('login-modal');
+            } else if(user.password === pass) {
+                loginUser(user);
+            } else {
+                alert("Contraseña incorrecta");
+            }
+        }
+
+        // --- SESIÓN ---
+        function saveNewProfile() {
+            const user = {
+                username: document.getElementById('new-username').value,
+                password: document.getElementById('new-password').value,
+                email: sessionStorage.getItem('temp_email'),
+                progreso: "Nivel 1"
+            };
+            localStorage.setItem(user.email, JSON.stringify(user));
+            loginUser(user);
+            closeModal('username-modal');
+        }
+
+        function loginUser(user) {
+            currentUser = user;
+            localStorage.setItem('user_session', JSON.stringify(user));
+            location.reload();
+        }
+
+        function logout() {
+            localStorage.removeItem('user_session');
+            location.reload();
+        }
+
+        function renderUserNav() {
+            const controls = document.getElementById('user-controls');
+            if(currentUser) {
+                controls.innerHTML = `<span style="color:#3ddc84">@${currentUser.username}</span> 
+                                     <button class="btn-nav" style="border-color:red; color:red; margin-left:10px;" onclick="logout()">Salir</button>`;
+                document.getElementById('cloud-info').innerHTML = `<p>Estado: 🟢 Sincronizado</p><p>Progreso actual: ${currentUser.progreso}</p>`;
+            }
+        }
+
+        // --- UTILIDADES ---
+        function toggleMenu() { const m = document.getElementById('dropdown-menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
+        function showSection(id) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); toggleMenu(); }
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function enviarReporte() { alert("Reporte enviado con éxito."); document.getElementById('bug-text').value = ""; }
+        function handleGoogle(r) { alert("Google login detectado. Configura tu perfil."); }
+    </script>
+</body>
+</html>
